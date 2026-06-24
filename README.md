@@ -12,7 +12,8 @@
   - 未來延展與反思規劃
 - 必填文字回饋欄位。
 - 送出時顯示「送出中」，成功後顯示「評分成功」並清空表單。
-- Google Apps Script URL 與學生名單會存在該瀏覽器的 localStorage。
+- Google Apps Script URL 已內建為預設值，學生開啟網頁即可送出。
+- 學生名單會存在該瀏覽器的 localStorage，可由教師在設定區調整。
 
 ## Google Sheets 設定
 

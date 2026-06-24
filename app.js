@@ -1,4 +1,5 @@
 const STORAGE_KEY = "chemResearchRubricSettings";
+const DEFAULT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyO6EgOe7KWLxg6A36_A9UlgoNzGkRTOdAnvSxL3twPwsoWD8PlDGDLBMLsKI17WPKS/exec";
 
 const rubricDimensions = [
   {
@@ -83,7 +84,7 @@ saveSettingsButton.addEventListener("click", () => {
 });
 
 clearSettingsButton.addEventListener("click", () => {
-  settings = { scriptUrl: "", roster: defaultRoster };
+  settings = { scriptUrl: DEFAULT_SCRIPT_URL, roster: defaultRoster };
   saveSettings(settings);
   applySettings(settings);
   setMessage("設定已清除，已恢復範例學生名單。", "success");
@@ -239,11 +240,11 @@ function loadSettings() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
     return {
-      scriptUrl: saved?.scriptUrl || "",
+      scriptUrl: saved?.scriptUrl || DEFAULT_SCRIPT_URL,
       roster: Array.isArray(saved?.roster) && saved.roster.length ? saved.roster : defaultRoster,
     };
   } catch {
-    return { scriptUrl: "", roster: defaultRoster };
+    return { scriptUrl: DEFAULT_SCRIPT_URL, roster: defaultRoster };
   }
 }
 
