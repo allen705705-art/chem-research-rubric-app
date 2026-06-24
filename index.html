@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>化學專題研究成果評分系統</title>
+    <link rel="stylesheet" href="./styles.css?v=1.0.1">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand-mark" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div>
+          <p class="eyebrow">化學專題研究</p>
+          <h1>期末成果自評與互評</h1>
+        </div>
+      </header>
+
+      <section class="notice" id="setupNotice">
+        <strong>尚未設定 Google Apps Script URL。</strong>
+        <span>請先在下方設定區貼上 Web App URL，送出資料才會寫入 Google Sheets。</span>
+      </section>
+
+      <form id="evaluationForm" class="workspace" novalidate>
+        <section class="panel identity-panel" aria-labelledby="identityTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Step 1</p>
+              <h2 id="identityTitle">基本資料</h2>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <label class="field">
+              <span>評分者學號 / 姓名</span>
+              <input id="rater" name="rater" list="studentRoster" autocomplete="off" required placeholder="例如：101 王小明">
+            </label>
+
+            <label class="field">
+              <span>被評者學號 / 姓名</span>
+              <input id="target" name="target" list="studentRoster" autocomplete="off" required placeholder="例如：108 陳同學">
+            </label>
+
+            <fieldset class="field radio-field">
+              <legend>評量類型</legend>
+              <div class="segmented">
+                <label>
+                  <input type="radio" name="assessmentType" value="自我評量" required>
+                  <span>自我評量</span>
+                </label>
+                <label>
+                  <input type="radio" name="assessmentType" value="同儕互評" required checked>
+                  <span>同儕互評</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+        </section>
+
+        <section class="panel scoring-panel" aria-labelledby="scoringTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Step 2</p>
+              <h2 id="scoringTitle">評分區</h2>
+            </div>
+            <output id="scoreSummary" class="score-summary">尚未完成評分</output>
+          </div>
+
+          <div class="rubric-list" id="rubricList"></div>
+        </section>
+
+        <section class="panel feedback-panel" aria-labelledby="feedbackTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Step 3</p>
+              <h2 id="feedbackTitle">文字回饋</h2>
+            </div>
+          </div>
+
+          <label class="field">
+            <span>具體優點與建議</span>
+            <textarea id="feedback" name="feedback" required rows="6" minlength="8" placeholder="請具體寫出值得學習的地方，以及下一步可以改進的建議。"></textarea>
+          </label>
+        </section>
+
+        <section class="panel settings-panel" aria-labelledby="settingsTitle">
+          <details>
+            <summary>
+              <span>
+                <span class="eyebrow">Teacher setup</span>
+                <strong id="settingsTitle">Google Sheets 與學生名單設定</strong>
+              </span>
+            </summary>
+            <div class="settings-body">
+              <label class="field">
+                <span>Google Apps Script Web App URL</span>
+                <input id="scriptUrl" name="scriptUrl" type="url" placeholder="https://script.google.com/macros/s/.../exec">
+              </label>
+
+              <label class="field">
+                <span>學生名單，每行一位</span>
+                <textarea id="rosterInput" rows="5" placeholder="101 王小明&#10;102 李同學&#10;103 陳同學"></textarea>
+              </label>
+
+              <div class="settings-actions">
+                <button class="secondary-button" type="button" id="saveSettingsButton">儲存設定</button>
+                <button class="ghost-button" type="button" id="clearSettingsButton">清除設定</button>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <div class="action-bar">
+          <p id="formMessage" role="status" aria-live="polite"></p>
+          <button class="primary-button" type="submit" id="submitButton">
+            <span class="button-label">送出評分</span>
+            <span class="button-spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+
+      <datalist id="studentRoster"></datalist>
+    </main>
+
+    <template id="rubricTemplate">
+      <article class="rubric-card">
+        <div class="rubric-copy">
+          <p class="dimension-kicker"></p>
+          <h3></h3>
+          <p class="dimension-detail"></p>
+          <dl class="anchors">
+            <div>
+              <dt>5分</dt>
+              <dd class="anchor-high"></dd>
+            </div>
+            <div>
+              <dt>3分</dt>
+              <dd class="anchor-mid"></dd>
+            </div>
+            <div>
+              <dt>1分</dt>
+              <dd class="anchor-low"></dd>
+            </div>
+          </dl>
+        </div>
+        <fieldset class="score-picker">
+          <legend></legend>
+          <div class="score-options"></div>
+        </fieldset>
+      </article>
+    </template>
+
+    <script src="./app.js?v=1.0.1" type="module"></script>
+  </body>
+</html>
